@@ -1,7 +1,7 @@
 ---
 image:
   repository: gcr.io/planet-4-151612/indiax
-  tag: v0.0.1
+  tag: develop
 pagespeed:
   enabled: false
 
