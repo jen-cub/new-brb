@@ -1,0 +1,143 @@
+---
+defaults: &defaults
+  docker:
+    - image: greenpeaceinternational/circleci-base:latest
+  working_directory: /home/circleci/app
+
+version: 2
+
+jobs:
+  lint:
+    <<: *defaults
+    steps:
+      - checkout
+      - run: make lint | tee /tmp/lint.log
+      - run:
+          name: Notify failure
+          when: on_fail
+          command: |
+            TYPE="Test" \
+            EXTRA_TEXT="\`\`\`$(cat /tmp/lint.log)\`\`\`" \
+            notify-job-failure.sh
+
+  build:
+    <<: *defaults
+    environment:
+      GOOGLE_PROJECT_ID: planet-4-151612
+    steps:
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - checkout
+      - run: activate-gcloud-account.sh
+      - run: gcloud auth configure-docker
+      - run: make build | tee /tmp/build.log
+      - run: make push | tee /tmp/build.log
+      - run:
+          name: Notify failure
+          when: on_fail
+          command: |
+            TYPE="Build" \
+            EXTRA_TEXT="\`\`\`
+            $(cat /tmp/build.log)
+            \`\`\`" \
+            notify-job-failure.sh
+      - run: |
+          TYPE="Build" \
+          EXTRA_TEXT="\`\`\`$(make history)\`\`\`" \
+          notify-job-success.sh
+
+  dev:
+    <<: *defaults
+    environment:
+      GOOGLE_PROJECT_ID: planet-4-151612
+    steps:
+      - checkout
+      - run: activate-gcloud-account.sh
+      - deploy:
+          name: Deploy to development cluster
+          command: make dev | tee /tmp/deploy_dev.log
+      - run:
+          name: Notify failure
+          when: on_fail
+          command: |
+            TYPE="Deploy Dev" \
+            EXTRA_TEXT="\`\`\`
+            $(cat /tmp/deploy_dev.log)
+            \`\`\`" \
+            notify-job-failure.sh
+      - run: TYPE="@jhasenau Promotion" notify-job-hold.sh
+      - run: |
+          TYPE="Deploy" \
+          EXTRA_TEXT="\`\`\`$(make history)\`\`\`" \
+          notify-job-success.sh
+  prod:
+    <<: *defaults
+    environment:
+      GOOGLE_PROJECT_ID: planet4-production
+    steps:
+      - checkout
+      - run: activate-gcloud-account.sh
+      - deploy:
+          name: Deploy to production cluster
+          command: make prod | tee /tmp/deploy.log
+      - run:
+          name: Notify failure
+          when: on_fail
+          command: |
+            TYPE="Deploy Prod" \
+            EXTRA_TEXT="\`\`\`$(cat /tmp/deploy.log)\`\`\`" \
+            notify-job-failure.sh
+      - run: |
+          TYPE="Deploy Prod" \
+          EXTRA_TEXT="\`\`\`$(make history)\`\`\`" \
+          notify-job-success.sh
+
+workflows:
+  version: 2
+  deploy:
+    jobs:
+      - lint:
+          context: org-global
+          filters:
+            branches:
+              ignore: master
+      - build:
+          context: org-global
+          requires:
+            - lint
+          filters:
+            branches:
+              only:
+                - develop
+      - dev:
+          context: org-global
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - develop
+      - hold:
+          type: approval
+          requires:
+            - dev
+          filters:
+            branches:
+              only: develop
+      - prod:
+          context: org-global
+          requires:
+            - hold
+          filters:
+            branches:
+              only: develop
+
+  tag:
+    jobs:
+      - build:
+          context: org-global
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v\p{Digit}+\.\p{Digit}+\.\p{Digit}+.*/
