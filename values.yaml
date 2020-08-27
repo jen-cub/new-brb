@@ -6,7 +6,7 @@ pagespeed:
 
 openresty:
   geoip:
-    enabled: true
+    enabled: false
     accountid: ""
     license: ""
   cloudflare:
