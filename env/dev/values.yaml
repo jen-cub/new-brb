@@ -1,4 +1,7 @@
 ---
-hostname: indiax.p4.greenpeace.org
+hostname: global.p4.greenpeace.org
+ingress:
+  hosts:
+    - name: indiax.p4.greenpeace.org
 image:
   tag: develop
