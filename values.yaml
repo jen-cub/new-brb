@@ -1,10 +1,8 @@
 ---
 image:
   repository: gcr.io/planet-4-151612/indiax
-  tag: develop
 pagespeed:
   enabled: false
-
 openresty:
   geoip:
     enabled: true
@@ -12,3 +10,7 @@ openresty:
     license: ""
   cloudflare:
     enabled: false
+ingress:
+  annotations:
+    kubernetes.io/ingress.class: redirects-nginx
+    cert-manager.io/issuer: letsencrypt-prod

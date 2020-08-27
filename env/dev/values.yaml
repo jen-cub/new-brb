@@ -1,2 +1,4 @@
 ---
 hostname: indiax.p4.greenpeace.org
+image:
+  tag: develop

@@ -1,2 +1,4 @@
 # global-redirects-indiax
-Redirect site for www.greenpeacex.in
+
+This repo hosts a static page that www.greenpeacex.in is being redirected to due
+to discontinuation of services previously provided by this page.
