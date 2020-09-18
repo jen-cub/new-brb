@@ -1,5 +1,5 @@
 ---
-hostname: global.p4.greenpeace.org
+hostname: brb.p4.greenpeace.org
 ingress:
   hosts:
     - name: indiax.p4.greenpeace.org

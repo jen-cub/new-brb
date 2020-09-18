@@ -1,7 +1,7 @@
 SHELL := /bin/bash
 
 NAMESPACE ?= default
-RELEASE_NAME ?= global-indiax
+RELEASE_NAME ?= global-brb
 CHART_NAME ?= p4/static
 #CHART_VERSION ?= 0.3.2-resource
 # add to dev if used:  #		--version "$(CHART_VERSION)" \

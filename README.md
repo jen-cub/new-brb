@@ -1,4 +1,4 @@
-# global-redirects-indiax
+# global-redirects-brb
 
-This repo hosts a static page that www.greenpeacex.in is being redirected to due
-to discontinuation of services previously provided by this page.
+This repo hosts a static page that provides a generic "Page Unavailable" message.
+To be used as required.
