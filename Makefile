@@ -54,21 +54,21 @@ pull:
 
 build: pull
 	docker build \
-		--tag=gcr.io/planet-4-151612/indiax:$(BUILD_TAG) \
-		--tag=gcr.io/planet-4-151612/indiax:$(BUILD_NUM) \
-		--tag=gcr.io/planet-4-151612/indiax:$(REVISION_TAG) \
+		--tag=gcr.io/planet-4-151612/brb:$(BUILD_TAG) \
+		--tag=gcr.io/planet-4-151612/brb:$(BUILD_NUM) \
+		--tag=gcr.io/planet-4-151612/brb:$(REVISION_TAG) \
 		.
 
 push: push-tag push-latest
 
 push-tag:
-	docker push gcr.io/planet-4-151612/indiax:$(BUILD_TAG)
-	docker push gcr.io/planet-4-151612/indiax:$(BUILD_NUM)
+	docker push gcr.io/planet-4-151612/brb:$(BUILD_TAG)
+	docker push gcr.io/planet-4-151612/brb:$(BUILD_NUM)
 
 push-latest:
 	@if [[ "$(PUSH_LATEST)" = "true" ]]; then { \
-		docker tag gcr.io/planet-4-151612/indiax:$(REVISION_TAG) gcr.io/planet-4-151612/indiax:latest; \
-		docker push gcr.io/planet-4-151612/indiax:latest; \
+		docker tag gcr.io/planet-4-151612/brb:$(REVISION_TAG) gcr.io/planet-4-151612/brb:latest; \
+		docker push gcr.io/planet-4-151612/brb:latest; \
 	}	else { \
 		echo "Not tagged.. skipping latest"; \
 	} fi
