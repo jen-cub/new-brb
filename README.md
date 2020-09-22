@@ -14,23 +14,22 @@ There are 2 options to using this repo:
 
 	b.  Upload your HTML page to this repo in the public folder, call it something relevant to your requirement.  In this example we have one called something.html.
 
-	c.  Add a redirect to this repo: https://github.com/greenpeace/global-redirects by adding the relevant details to the dev.sites.json file per this example:
+	c.  Add a redirect to this repo: https://github.com/greenpeace/global-redirects by adding the relevant details to the dev.sites.json file per this example which will create the required nginx ingress:
 
-  {
-    "owners": [
-      {
-       "name": "Contact for Redirect",
-       "email": "someone@greenpeace.org",
-       "unit": "GP Somewhere"
-      }
-    ],
-    "from": "somthing.com",
-    "to": "https://brb.p4.greenpeace.org/something.html"
-  }
+		  {
+		    "owners": [
+		      {
+		       "name": "Contact for Redirect",
+		       "email": "someone@greenpeace.org",
+		       "unit": "GP Somewhere"
+		      }
+		    ],
+		    "from": "somthing.com",
+		    "to": "https://brb.p4.greenpeace.org/something.html"
+		  }
 
-  This will create an ingress for the nginx service.
 
-	d.  Point your DNS for the source site to this IP:
+	d.  Point your domain to the following IP in your DNS.
 
 | DNS name | Type | TTL | Data |
 | ------------- | ------ |------ |------ |
