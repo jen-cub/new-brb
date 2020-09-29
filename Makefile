@@ -3,7 +3,7 @@ SHELL := /bin/bash
 NAMESPACE ?= default
 RELEASE_NAME ?= global-brb
 CHART_NAME ?= p4/static
-#CHART_VERSION ?= 0.3.2-resource
+CHART_VERSION ?= 0.3.5-alpha
 # add to dev if used:  #		--version "$(CHART_VERSION)" \
 
 DEV_CLUSTER ?= p4-development
@@ -83,6 +83,7 @@ endif
 	helm repo add p4 https://planet4-helm-charts.storage.googleapis.com && \
 	helm repo update
 	@helm upgrade --install --force --wait $(RELEASE_NAME) $(CHART_NAME) \
+		--version "$(CHART_VERSION)" \
 		--namespace=$(NAMESPACE) \
 		--values values.yaml \
 		--values env/dev/values.yaml \
