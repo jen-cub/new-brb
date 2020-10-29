@@ -39,4 +39,4 @@ There are 2 options to using this repo:
 
 At this stage all commits to the develop pipeline complete the work required.  
 
-> NB:  This has not been deployed to P4 production.
+> NB:  This has not been deployed to P4 production..
