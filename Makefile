@@ -6,16 +6,12 @@ CHART_NAME ?= p4/static
 #CHART_VERSION ?= 0.3.5-alpha
 # add to dev if used:  #		--version "$(CHART_VERSION)" \
 
-DEV_CLUSTER ?= p4-development
-DEV_PROJECT ?= planet-4-151612
-DEV_ZONE ?= us-central1-a
-
-PROD_CLUSTER ?= planet4-production
-PROD_PROJECT ?= planet4-production
-PROD_ZONE ?= us-central1-a
+DEV_CLUSTER ?= testrc
+DEV_PROJECT ?= jendevops1
+DEV_ZONE ?= australia-southeast1-c
 
 SED_MATCH ?= [^a-zA-Z0-9._-]
-ifeq ($(CIRCLECI),true)
+ifeq ($(CIRCLECI)ah dev,true)
 # Configure build variables based on CircleCI environment vars
 BUILD_NUM = build-$(CIRCLE_BUILD_NUM)
 BRANCH_NAME ?= $(shell sed 's/$(SED_MATCH)/-/g' <<< "$(CIRCLE_BRANCH)")
@@ -50,25 +46,25 @@ lint-ci:
 	@circleci config validate
 
 pull:
-	docker pull gcr.io/planet-4-151612/openresty:latest
+	docker pull gcr.io/jendevops1/openresty:latest
 
 build: pull
 	docker build \
-		--tag=gcr.io/planet-4-151612/brb:$(BUILD_TAG) \
-		--tag=gcr.io/planet-4-151612/brb:$(BUILD_NUM) \
-		--tag=gcr.io/planet-4-151612/brb:$(REVISION_TAG) \
+		--tag=gcr.io/jendevops1/brb:$(BUILD_TAG) \
+		--tag=gcr.io/jendevops1/brb:$(BUILD_NUM) \
+		--tag=gcr.io/jendevops1/brb:$(REVISION_TAG) \
 		.
 
 push: push-tag push-latest
 
 push-tag:
-	docker push gcr.io/planet-4-151612/brb:$(BUILD_TAG)
-	docker push gcr.io/planet-4-151612/brb:$(BUILD_NUM)
+	docker push gcr.io/jendevops1/brb:$(BUILD_TAG)
+	docker push gcr.io/jendevops1/brb:$(BUILD_NUM)
 
 push-latest:
 	@if [[ "$(PUSH_LATEST)" = "true" ]]; then { \
-		docker tag gcr.io/planet-4-151612/brb:$(REVISION_TAG) gcr.io/planet-4-151612/brb:latest; \
-		docker push gcr.io/planet-4-151612/brb:latest; \
+		docker tag gcr.io/jendevops1/brb:$(REVISION_TAG) gcr.io/jendevops1/brb:latest; \
+		docker push gcr.io/jendevops1/brb:latest; \
 	}	else { \
 		echo "Not tagged.. skipping latest"; \
 	} fi
