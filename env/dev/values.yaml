@@ -1,7 +1,7 @@
 ---
 hostname: jencub.xyz
-ingress:
-  hosts:
-    - name: nginx.jencub.xyz.
+#ingress:
+#  hosts:
+#    - name: nginx.jencub.xyz.
 image:
   tag: develop
