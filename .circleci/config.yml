@@ -5,7 +5,7 @@ docker_auth: &docker_auth
 
 defaults: &defaults
   docker:
-    - image: greenpeaceinternational/circleci-base:latest
+    - image: jencub2/circleci-base:latest
       auth:
         <<: *docker_auth
   working_directory: /home/circleci/app
@@ -29,10 +29,10 @@ jobs:
   build:
     <<: *defaults
     environment:
-      GOOGLE_PROJECT_ID: planet-4-151612
+      GOOGLE_PROJECT_ID: jendevops1
     steps:
       - setup_remote_docker:
-          docker_layer_caching: true
+          docker_layer_caching: false
       - checkout
       - run: activate-gcloud-account.sh
       - run: gcloud auth configure-docker
@@ -55,7 +55,7 @@ jobs:
   dev:
     <<: *defaults
     environment:
-      GOOGLE_PROJECT_ID: planet-4-151612
+      GOOGLE_PROJECT_ID: jendevops1
     steps:
       - checkout
       - run: activate-gcloud-account.sh
