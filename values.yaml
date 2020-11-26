@@ -11,3 +11,10 @@ openresty:
     license: ""
   cloudflare:
     enabled: false
+
+ingress:
+  enabled: true
+  metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/issuer: letsencrypt-prod
