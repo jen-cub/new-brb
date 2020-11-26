@@ -1,7 +1,4 @@
 ---
-
-hostname: jencub.xyz
-
 image:
   repository: gcr.io/jendevops1/brb
 pagespeed:
@@ -25,11 +22,3 @@ ingress:
     - hosts:
         - jencub.xyz
       secretName: jen-cub-tls
-  rules:
-    - host: jencub.xyz
-      http:
-        paths:
-          - backend:
-              serviceName: global-brb-static
-              servicePort: http
-            path: /
