@@ -16,5 +16,9 @@ ingress:
   enabled: true
   metadata:
   annotations:
-    kubernetes.io/ingress.class: nginx
+    kubernetes.io/ingress.class: redirects-nginx
     cert-manager.io/issuer: letsencrypt-prod
+  tls:
+    - hosts:
+        - jencub.xyz
+      secretName: jen-cub-tls
