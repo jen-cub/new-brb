@@ -1,4 +1,7 @@
 ---
+
+hostname: jencub.xyz
+
 image:
   repository: gcr.io/jendevops1/brb
 pagespeed:
