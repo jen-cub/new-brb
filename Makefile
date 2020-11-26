@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 
-NAMESPACE ?= default
+NAMESPACE ?= nginx-ingress
 RELEASE_NAME ?= global-brb
 CHART_NAME ?= p4/static
 #CHART_VERSION ?= 0.3.5-alpha
