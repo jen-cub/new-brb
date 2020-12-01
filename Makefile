@@ -2,8 +2,8 @@ SHELL := /bin/bash
 
 NAMESPACE ?= nginx-ingress
 RELEASE_NAME ?= global-brb
-CHART_NAME ?= jen-helm-charts/static
-CHART_VERSION ?= 0.3.6-beta
+CHART_NAME ?= jencub/static
+CHART_VERSION ?= 0.8.6-delta
 # add to dev if used:  #		--version "$(CHART_VERSION)" \
 
 DEV_CLUSTER ?= testrc
@@ -76,10 +76,10 @@ endif
 	gcloud config set project $(DEV_PROJECT)
 	gcloud container clusters get-credentials $(DEV_CLUSTER) --zone $(DEV_ZONE) --project $(DEV_PROJECT)
 	helm init --client-only
-	helm repo add jen-helm-charts https://jen-helm-charts.storage.googleapis.com && \
+	helm repo add jencub https://jen-helm-charts.storage.googleapis.com && \
 	helm repo update
 	@helm upgrade --install --force --wait $(RELEASE_NAME) $(CHART_NAME) \
-		--version "$(CHART_VERSION)" \
+		--version $(CHART_VERSION) \
 		--namespace=$(NAMESPACE) \
 		--values values.yaml \
 		--values env/dev/values.yaml \
