@@ -3,6 +3,8 @@ hostname: jencub.xyz
 ingress:
   spec:
     tls:
-      secretName: tls-jencub-xyz
+      - hosts:
+          - jencub.xyz
+        secretName: tls-jencub-xyz
 image:
   tag: develop
