@@ -11,6 +11,3 @@ openresty:
     license: ""
   cloudflare:
     enabled: false
-
-ingress:
-  enabled: true
