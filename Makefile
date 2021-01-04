@@ -75,16 +75,17 @@ ifndef CI
 endif
 	gcloud config set project $(DEV_PROJECT)
 	gcloud container clusters get-credentials $(DEV_CLUSTER) --zone $(DEV_ZONE) --project $(DEV_PROJECT)
-	helm init --client-only
-	helm repo add jencub https://jen-helm-charts.storage.googleapis.com && \
-	helm repo update
-	@helm upgrade --install --force --wait $(RELEASE_NAME) $(CHART_NAME) \
+	
+	helm3 repo add jencub https://jen-helm-charts.storage.googleapis.com && \
+	helm3 repo update
+	@helm3 upgrade --install --wait $(RELEASE_NAME) $(CHART_NAME) \
 		--version $(CHART_VERSION) \
 		--namespace=$(NAMESPACE) \
 		--values values.yaml \
 		--values env/dev/values.yaml \
 		--set openresty.geoip.accountid=$(GEOIP_ACCOUNTID) \
 		--set openresty.geoip.license=$(GEOIP_LICENSE)
+	$(MAKE) history
 
 prod:
 ifndef CI
@@ -92,10 +93,10 @@ ifndef CI
 endif
 	gcloud config set project $(PROD_PROJECT)
 	gcloud container clusters get-credentials $(PROD_CLUSTER) --zone $(PROD_ZONE) --project $(PROD_PROJECT)
-	helm init --client-only
-	helm repo add p4 https://planet4-helm-charts.storage.googleapis.com && \
-	helm repo update
-	@helm upgrade --install --force --wait $(RELEASE_NAME) $(CHART_NAME) \
+	
+	helm3 repo add p4 https://planet4-helm-charts.storage.googleapis.com && \
+	helm3 repo update
+	@helm3 upgrade --install --force --wait $(RELEASE_NAME) $(CHART_NAME) \
 		--namespace=$(NAMESPACE) \
 		--values values.yaml \
 		--values env/prod/values.yaml \
@@ -104,4 +105,4 @@ endif
 
 
 history:
-	helm history $(RELEASE_NAME) --max=5
+	helm3 history $(RELEASE) -n $(NAMESPACE) --max=5
