@@ -105,4 +105,4 @@ endif
 
 
 history:
-	helm3 history $(RELEASE) -n $(NAMESPACE) --max=5
+	helm3 history $(RELEASE_NAME) -n $(NAMESPACE) --max=5
