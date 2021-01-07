@@ -3,7 +3,7 @@ SHELL := /bin/bash
 NAMESPACE ?= nginx-ingress
 RELEASE_NAME ?= global-brb
 CHART_NAME ?= jencub/static2
-CHART_VERSION ?= 0.8.6-delta
+CHART_VERSION ?= 0.3.7
 # add to dev if used:  #		--version "$(CHART_VERSION)" \
 
 DEV_CLUSTER ?= testrc
